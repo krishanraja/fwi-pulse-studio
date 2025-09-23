@@ -21,11 +21,27 @@ export default {
         foreground: "hsl(var(--foreground))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          foreground: "white",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          foreground: "white",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "white",
+        },
+        success: {
+          DEFAULT: "hsl(var(--success))",
+          foreground: "white",
+        },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "white",
+        },
+        error: {
+          DEFAULT: "hsl(var(--error))",
+          foreground: "white",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -34,10 +50,6 @@ export default {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -57,6 +69,10 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      fontFamily: {
+        primary: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        display: ['Gobold', 'Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",

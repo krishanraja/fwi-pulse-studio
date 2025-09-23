@@ -2,87 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Fractional Working Index - Mindmaker Brand System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Brand (HSL units only) */
+    --primary: 250 71% 63%;      /* #6C40FF */
+    --secondary: 248 56% 71%;    /* #8B5CF6 */
+    --accent: 217 91% 60%;       /* #3B82F6 */
+    --success: 158 64% 52%;      /* #10B981 */
+    --warning: 38 92% 50%;       /* #F59E0B */
+    --error: 0 84% 60%;          /* #EF4444 */
 
+    /* Surfaces & text */
+    --background: 0 0% 98%;      /* #FAFAFA */
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 28% 25%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 250 71% 63%;
 
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
+    /* Destructive */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
-
+    /* Sidebar */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Gradients */
+    --gradient-brand: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --gradient-subtle: linear-gradient(135deg, hsl(250 71% 96%) 0%, hsl(248 56% 88%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
+    --background: 222 47% 7%;
+    --foreground: 213 31% 91%;
+    --card: 217 33% 17%;
+    --card-foreground: 213 31% 91%;
+    --border: 215 28% 17%;
+    --input: 215 28% 17%;
+    --muted: 217 33% 17%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --popover: 217 33% 17%;
+    --popover-foreground: 213 31% 91%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -92,14 +73,199 @@ All colors MUST be HSL.
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-}
 
-@layer base {
+  /* Typography stacks */
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-primary;
+  }
+
+  .font-primary { 
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  }
+  
+  .font-display { 
+    font-family: "Gobold", "Inter", system-ui, sans-serif; 
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  /* Container system */
+  .container-width { 
+    max-width: 1200rem; 
+    margin: 0 auto; 
+    padding: 1rem; 
+  }
+  
+  @media (min-width: 640px) {
+    .container-width {
+      padding: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container-width {
+      padding: 2rem;
+    }
+  }
+
+  /* Glass cards */
+  .glass-card {
+    background: hsl(var(--card) / 0.92);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border) / 0.5);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Hero text shimmer */
+  .hero-text-shimmer {
+    background: linear-gradient(90deg, 
+      hsl(var(--foreground) / 0.35), 
+      hsl(var(--foreground)), 
+      hsl(var(--foreground) / 0.35)
+    );
+    background-size: 400% 100%;
+    background-clip: text; 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    animation: hero-text-shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes hero-text-shimmer {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: -200% 0; }
+  }
+
+  /* Buttons */
+  .btn-primary {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem;
+    background: var(--gradient-brand);
+    color: white; 
+    padding: 0.75rem 1rem; 
+    border-radius: 0.75rem; 
+    border: 0;
+    font-weight: 600;
+    transition: transform 0.15s ease, box-shadow 0.15s ease; 
+    box-shadow: var(--shadow-soft);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover { 
+    transform: translateY(-1px); 
+  }
+
+  .btn-secondary {
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem;
+    background: hsl(var(--card));
+    color: hsl(var(--foreground)); 
+    padding: 0.75rem 1rem; 
+    border-radius: 0.75rem; 
+    border: 1px solid hsl(var(--border));
+    font-weight: 500;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .btn-secondary:hover { 
+    background: hsl(var(--muted));
+    transform: translateY(-1px); 
+  }
+
+  /* Stats */
+  .stat-up { 
+    color: hsl(var(--success)); 
+  }
+  
+  .stat-down { 
+    color: hsl(var(--error)); 
+  }
+
+  /* Count up animation */
+  .count-up {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Index cards */
+  .index-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .index-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-brand);
+    opacity: 0.8;
+  }
+
+  /* Sparkline */
+  .sparkline {
+    width: 100%;
+    height: 32px;
+  }
+
+  /* Modal backdrop */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: hsl(var(--background) / 0.8);
+    backdrop-filter: blur(4px);
+    z-index: 50;
+  }
+
+  /* Gauge */
+  .gauge-fill {
+    transition: stroke-dasharray 1s ease-in-out;
+  }
+}
+
+@layer utilities {
+  /* Responsive text sizes */
+  .text-hero {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+  }
+  
+  @media (min-width: 640px) {
+    .text-hero {
+      font-size: 3.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .text-hero {
+      font-size: 4rem;
+    }
+  }
+
+  /* Score displays */
+  .score-large {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  
+  .score-medium {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
 }
