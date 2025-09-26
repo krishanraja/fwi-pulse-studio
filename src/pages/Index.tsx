@@ -28,10 +28,10 @@ export const FWI_DATA = {
   },
   movers: [
     { skill:"Fractional CMO", type:"demand", change_pct: +12, note:"Spike in enterprise RFPs" },
-    { skill:"AI Product Consultant", type:"supply", change_pct: +9, note:"Upwork listings up" },
+    { skill:"AI Strategy Consultant", type:"supply", change_pct: +9, note:"Upwork listings up" },
     { skill:"Fractional CFO", type:"demand", change_pct: +8, note:"Series A/B hiring" },
-    { skill:"Data Clean Rooms", type:"culture", change_pct: +7, note:"Search interest rising" },
-    { skill:"Agentic Workflow PM", type:"demand", change_pct: +6, note:"Retail media pilots" }
+    { skill:"Fractional CRO", type:"culture", change_pct: +7, note:"Search interest rising" },
+    { skill:"Interim Operations Director", type:"demand", change_pct: +6, note:"Project-based hiring up" }
   ]
 };
 
@@ -69,15 +69,17 @@ const Index = () => {
         </section>
 
         {/* Two-column layout for signals and readiness */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {/* Signals Table */}
-          <section id="signals" className="lg:col-span-2 glass-card p-6">
+          <section id="signals" className="lg:col-span-2 glass-card p-6 flex flex-col">
             <h2 className="text-xl font-semibold mb-4">Market Signals (Last 7 Days)</h2>
-            <SignalsTable movers={FWI_DATA.movers} />
+            <div className="flex-1">
+              <SignalsTable movers={FWI_DATA.movers} />
+            </div>
           </section>
 
           {/* Fractional Readiness */}
-          <aside id="readiness">
+          <aside id="readiness" className="flex">
             <FractionalReadiness />
           </aside>
         </div>

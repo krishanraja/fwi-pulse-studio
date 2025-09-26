@@ -39,7 +39,7 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
   return (
     <div className="text-center space-y-6">
       <div className="space-y-2">
-        <h1 className="text-hero font-display hero-text-shimmer">
+        <h1 className="text-4xl md:text-5xl font-semibold text-foreground font-primary">
           Fractional Working Index
         </h1>
         <p className="text-lg text-muted-foreground">
@@ -47,7 +47,7 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
         </p>
       </div>
 
-      <div className="glass-card p-8 max-w-4xl mx-auto">
+      <div className="glass-card p-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {/* Main Score */}
           <div className="md:col-span-1 space-y-2">
