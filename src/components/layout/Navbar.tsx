@@ -19,8 +19,8 @@ const Navbar = () => {
       <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container-width">
           <div className="flex items-center justify-between h-16">
-            {/* Logo - negative margin compensates for image's internal whitespace */}
-            <div className="flex items-center -ml-1">
+            {/* Logo - no margin compensation needed, image has no internal padding */}
+            <div className="flex items-center">
               <img 
                 src={fractionlLogo} 
                 alt="Fractionl" 
