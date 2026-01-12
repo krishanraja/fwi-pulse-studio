@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
+import * as React from 'react';
 
 export interface UserPreferences {
   weights: { demand: number; supply: number; culture: number };
@@ -23,12 +23,12 @@ interface UserPreferencesContextType {
   resetPreferences: () => void;
 }
 
-const UserPreferencesContext = createContext<UserPreferencesContextType | null>(null);
+const UserPreferencesContext = React.createContext<UserPreferencesContextType | null>(null);
 
 const STORAGE_KEY = 'fwi_user_preferences';
 
-export function UserPreferencesProvider({ children }: { children: ReactNode }) {
-  const [preferences, setPreferences] = useState<UserPreferences>(() => {
+export function UserPreferencesProvider(props: { children: React.ReactNode }) {
+  const [preferences, setPreferences] = React.useState<UserPreferences>(() => {
     if (typeof window === 'undefined') return defaultPreferences;
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -38,10 +38,12 @@ export function UserPreferencesProvider({ children }: { children: ReactNode }) {
     }
   });
 
-  useEffect(() => {
+  React.useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
-    } catch { /* ignore */ }
+    } catch { 
+      // Ignore storage errors
+    }
   }, [preferences]);
 
   const updatePreferences = (updates: Partial<UserPreferences>) => {
@@ -58,13 +60,17 @@ export function UserPreferencesProvider({ children }: { children: ReactNode }) {
 
   const resetPreferences = () => setPreferences(defaultPreferences);
 
-  const value = { preferences, updatePreferences, updateWeights, resetPreferences };
+  const value: UserPreferencesContextType = { preferences, updatePreferences, updateWeights, resetPreferences };
 
-  return <UserPreferencesContext.Provider value={value}>{children}</UserPreferencesContext.Provider>;
+  return React.createElement(
+    UserPreferencesContext.Provider,
+    { value },
+    props.children
+  );
 }
 
-export function useUserPreferences() {
-  const context = useContext(UserPreferencesContext);
+export function useUserPreferences(): UserPreferencesContextType {
+  const context = React.useContext(UserPreferencesContext);
   if (!context) throw new Error('useUserPreferences must be used within UserPreferencesProvider');
   return context;
 }

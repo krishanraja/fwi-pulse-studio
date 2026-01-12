@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import AppShell from '@/components/layout/AppShell';
 import HeroSection from '@/components/HeroSection';
 import SubIndexCards from '@/components/SubIndexCards';
@@ -42,13 +43,43 @@ const FWI_DATA: FWIData = {
 const Index = () => {
   const [showMethodology, setShowMethodology] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isLoading, setIsLoading] = useState(true);
   const { preferences } = useUserPreferences();
+
+  // Simulate initial data load with branded loading screen
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Use user-configured weights
   const dataWithUserWeights = {
     ...FWI_DATA,
     weights: preferences.weights
   };
+
+  // Loading screen with branded spinner
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col items-center gap-6"
+        >
+          <LoadingSpinner size="lg" />
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-sm text-muted-foreground"
+          >
+            Loading market data...
+          </motion.p>
+        </motion.div>
+      </div>
+    );
+  }
 
   const renderDashboard = () => (
     <motion.div
@@ -96,27 +127,37 @@ const Index = () => {
   );
 
   const renderSignals = () => (
-    <div className="container-width py-6">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="container-width py-6"
+    >
       <div className="glass-card p-5">
         <h2 className="text-lg font-semibold mb-4 text-foreground">All Market Signals</h2>
         <SignalsTable movers={dataWithUserWeights.movers} />
       </div>
-    </div>
+    </motion.div>
   );
 
   const renderInsights = () => (
-    <div className="container-width py-6">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="container-width py-6"
+    >
       <div className="glass-card p-5">
         <AIInsights />
       </div>
-    </div>
+    </motion.div>
   );
 
   return (
     <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
-      {activeTab === 'dashboard' && renderDashboard()}
-      {activeTab === 'signals' && renderSignals()}
-      {activeTab === 'insights' && renderInsights()}
+      <AnimatePresence mode="wait">
+        {activeTab === 'dashboard' && renderDashboard()}
+        {activeTab === 'signals' && renderSignals()}
+        {activeTab === 'insights' && renderInsights()}
+      </AnimatePresence>
 
       <MethodologyDrawer 
         open={showMethodology}

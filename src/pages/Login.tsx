@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { fadeIn, fadeInUp } from '@/lib/motion';
 import { ArrowRight } from 'lucide-react';
+import fractionlLogo from '@/assets/fractionl-logo.png';
+import fractionlIcon from '@/assets/fractionl-icon.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,6 @@ const Login = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Placeholder - actual auth will be implemented with Supabase
     setTimeout(() => setIsLoading(false), 1000);
   };
 
@@ -23,24 +23,39 @@ const Login = () => {
       {/* Left Panel - Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          animate="show"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="w-full max-w-sm space-y-8"
         >
-          {/* Logo */}
-          <motion.div variants={fadeInUp} className="text-center space-y-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary mx-auto flex items-center justify-center">
-              <span className="text-white font-bold text-xl">FWI</span>
+          {/* Logo - Full logo only on login page */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-center space-y-4"
+          >
+            <img 
+              src={fractionlLogo} 
+              alt="Fractionl AI" 
+              className="h-10 mx-auto object-contain"
+            />
+            <div>
+              <h1 className="text-xl font-semibold text-foreground">Welcome back</h1>
+              <p className="text-muted-foreground text-sm mt-1">
+                Sign in to access your dashboard
+              </p>
             </div>
-            <h1 className="text-2xl font-semibold text-foreground">Welcome back</h1>
-            <p className="text-muted-foreground text-sm">
-              Sign in to access your dashboard
-            </p>
           </motion.div>
 
           {/* Form */}
-          <motion.form variants={fadeInUp} onSubmit={handleSubmit} className="space-y-4">
+          <motion.form 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            onSubmit={handleSubmit} 
+            className="space-y-4"
+          >
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -83,7 +98,11 @@ const Login = () => {
           </div>
 
           {/* Social Login */}
-          <motion.div variants={fadeInUp}>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
             <Button variant="outline" className="w-full h-11">
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path
@@ -108,7 +127,12 @@ const Login = () => {
           </motion.div>
 
           {/* Sign up link */}
-          <motion.p variants={fadeInUp} className="text-center text-sm text-muted-foreground">
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-center text-sm text-muted-foreground"
+          >
             Don't have an account?{' '}
             <button type="button" className="text-primary hover:underline font-medium">
               Create account
@@ -118,33 +142,49 @@ const Login = () => {
       </div>
 
       {/* Right Panel - Branding (Desktop only) */}
-      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary/5 to-secondary/10 items-center justify-center p-12">
+      <div className="hidden lg:flex flex-1 bg-gradient-to-br from-primary/5 via-secondary/10 to-primary/5 items-center justify-center p-12 relative overflow-hidden">
+        {/* Decorative gradient orbs */}
+        <div className="absolute top-1/4 right-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 left-1/4 w-48 h-48 bg-secondary/20 rounded-full blur-3xl" />
+        
         <motion.div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="max-w-md space-y-6"
+          className="max-w-md space-y-8 relative z-10"
         >
-          <h2 className="text-3xl font-semibold text-foreground leading-tight">
-            Real-time intelligence on the fractional economy
-          </h2>
-          <p className="text-muted-foreground leading-relaxed">
-            Track demand, supply, and cultural adoption signals across the fractional executive market. Make informed decisions with data-driven insights.
-          </p>
+          {/* Large icon for branding */}
+          <motion.img 
+            src={fractionlIcon}
+            alt="Fractionl"
+            className="w-20 h-20 object-contain"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4 }}
+          />
+          
+          <div className="space-y-4">
+            <h2 className="text-3xl font-semibold text-foreground leading-tight">
+              Real-time intelligence on the fractional economy
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Track demand, supply, and cultural adoption signals across the fractional executive market. Make informed decisions with data-driven insights.
+            </p>
+          </div>
           
           {/* Stats preview */}
           <div className="grid grid-cols-3 gap-4 pt-4">
-            <div className="text-center">
+            <div className="text-center p-4 glass-card">
               <div className="text-2xl font-bold text-primary">68.4</div>
-              <div className="text-xs text-muted-foreground">Current Index</div>
+              <div className="text-xs text-muted-foreground mt-1">Current Index</div>
             </div>
-            <div className="text-center">
+            <div className="text-center p-4 glass-card">
               <div className="text-2xl font-bold text-success">+4.2</div>
-              <div className="text-xs text-muted-foreground">30d Change</div>
+              <div className="text-xs text-muted-foreground mt-1">30d Change</div>
             </div>
-            <div className="text-center">
+            <div className="text-center p-4 glass-card">
               <div className="text-2xl font-bold text-accent">12</div>
-              <div className="text-xs text-muted-foreground">Data Sources</div>
+              <div className="text-xs text-muted-foreground mt-1">Data Sources</div>
             </div>
           </div>
         </motion.div>

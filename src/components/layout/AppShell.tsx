@@ -2,6 +2,7 @@ import { useState, ReactNode } from 'react';
 import Navbar from './Navbar';
 import BottomNav from './BottomNav';
 import SettingsSheet from '@/components/SettingsSheet';
+import fractionlIcon from '@/assets/fractionl-icon.png';
 
 interface AppShellProps {
   children: ReactNode;
@@ -23,13 +24,15 @@ const AppShell = ({ children, activeTab = 'dashboard', onTabChange }: AppShellPr
         <Navbar />
       </div>
 
-      {/* Mobile Header - Minimal */}
+      {/* Mobile Header - Minimal with icon */}
       <header className="md:hidden sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="flex items-center justify-center h-14 px-4">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-              <span className="text-white font-bold text-xs">FWI</span>
-            </div>
+            <img 
+              src={fractionlIcon} 
+              alt="Fractionl" 
+              className="w-7 h-7 object-contain"
+            />
             <span className="font-semibold text-foreground text-sm">Fractional Working Index</span>
           </div>
         </div>
