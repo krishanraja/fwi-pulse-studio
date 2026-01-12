@@ -1,45 +1,18 @@
-import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
-
-interface Mover {
-  skill: string;
-  type: string;
-  change_pct: number;
-  note: string;
-}
+import { TrendingUp, TrendingDown } from 'lucide-react';
+import type { Mover } from '@/lib/types';
 
 interface SignalsTableProps {
   movers: Mover[];
 }
 
 const SignalsTable = ({ movers }: SignalsTableProps) => {
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'demand':
-        return <Activity className="w-4 h-4 text-primary" />;
-      case 'supply':
-        return <Activity className="w-4 h-4 text-accent" />;
-      case 'culture':
-        return <Activity className="w-4 h-4 text-secondary" />;
-      default:
-        return <Activity className="w-4 h-4 text-muted-foreground" />;
-    }
-  };
-
-  const getTypeBadge = (type: string) => {
-    const styles = {
-      demand: 'bg-primary/10 text-primary border-primary/20',
-      supply: 'bg-accent/10 text-accent border-accent/20', 
-      culture: 'bg-secondary/10 text-secondary border-secondary/20'
+  const getTypeDot = (type: string) => {
+    const colors: Record<string, string> = {
+      demand: 'bg-primary',
+      supply: 'bg-accent', 
+      culture: 'bg-secondary'
     };
-    
-    return (
-      <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-medium border ${
-        styles[type as keyof typeof styles] || 'bg-muted text-muted-foreground'
-      }`}>
-        {getTypeIcon(type)}
-        {type.charAt(0).toUpperCase() + type.slice(1)}
-      </span>
-    );
+    return colors[type] || 'bg-muted-foreground';
   };
 
   return (
@@ -47,16 +20,16 @@ const SignalsTable = ({ movers }: SignalsTableProps) => {
       {/* Mobile Cards */}
       <div className="block md:hidden space-y-3">
         {movers.map((mover, index) => (
-          <div key={index} className="border border-border rounded-lg p-4 space-y-3">
+          <div key={index} className="border border-border rounded-lg p-4 space-y-2 hover:border-primary/30 transition-colors">
             <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <h4 className="font-medium">{mover.skill}</h4>
-                {getTypeBadge(mover.type)}
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${getTypeDot(mover.type)}`} />
+                <span className="font-medium text-foreground">{mover.skill}</span>
               </div>
-              <div className={`flex items-center gap-1 font-semibold ${
+              <div className={`flex items-center gap-1 font-semibold text-sm ${
                 mover.change_pct >= 0 ? 'stat-up' : 'stat-down'
               }`}>
-                {mover.change_pct >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+                {mover.change_pct >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                 {mover.change_pct >= 0 ? '+' : ''}{mover.change_pct}%
               </div>
             </div>
@@ -69,30 +42,33 @@ const SignalsTable = ({ movers }: SignalsTableProps) => {
       <table className="hidden md:table w-full">
         <thead>
           <tr className="border-b border-border">
-            <th className="text-left py-3 px-4 font-semibold">Skill/Role</th>
-            <th className="text-left py-3 px-4 font-semibold">Type</th>
-            <th className="text-right py-3 px-4 font-semibold">% Change</th>
-            <th className="text-left py-3 px-4 font-semibold">Note</th>
+            <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Role</th>
+            <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Type</th>
+            <th className="text-right py-3 px-4 font-medium text-muted-foreground text-sm">Change</th>
+            <th className="text-left py-3 px-4 font-medium text-muted-foreground text-sm">Insight</th>
           </tr>
         </thead>
         <tbody>
           {movers.map((mover, index) => (
-            <tr key={index} className="border-b border-border/50 hover:bg-muted/50 transition-colors">
-              <td className="py-4 px-4">
-                <div className="font-medium">{mover.skill}</div>
+            <tr key={index} className="border-b border-border/50 hover:bg-muted/30 transition-colors">
+              <td className="py-3.5 px-4">
+                <span className="font-medium text-foreground">{mover.skill}</span>
               </td>
-              <td className="py-4 px-4">
-                {getTypeBadge(mover.type)}
+              <td className="py-3.5 px-4">
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${getTypeDot(mover.type)}`} />
+                  <span className="text-sm text-muted-foreground capitalize">{mover.type}</span>
+                </div>
               </td>
-              <td className="py-4 px-4 text-right">
-                <div className={`flex items-center justify-end gap-1 font-semibold ${
+              <td className="py-3.5 px-4 text-right">
+                <div className={`inline-flex items-center gap-1 font-semibold text-sm ${
                   mover.change_pct >= 0 ? 'stat-up' : 'stat-down'
                 }`}>
-                  {mover.change_pct >= 0 ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
+                  {mover.change_pct >= 0 ? <TrendingUp size={14} /> : <TrendingDown size={14} />}
                   {mover.change_pct >= 0 ? '+' : ''}{mover.change_pct}%
                 </div>
               </td>
-              <td className="py-4 px-4 text-muted-foreground">
+              <td className="py-3.5 px-4 text-muted-foreground text-sm">
                 {mover.note}
               </td>
             </tr>

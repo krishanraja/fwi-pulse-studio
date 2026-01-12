@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { TrendingUp, TrendingDown, Download, BookOpen } from 'lucide-react';
-import { calcComposite } from '@/pages/Index';
+import { TrendingUp, TrendingDown, Download, BookOpen, RefreshCw } from 'lucide-react';
+import { fadeInUp } from '@/lib/motion';
+import { calcComposite } from '@/lib/types';
 
 interface HeroSectionProps {
   data: any;
@@ -10,16 +12,15 @@ interface HeroSectionProps {
 
 const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
   const [animatedScore, setAnimatedScore] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const compositeScore = calcComposite(data.today, data.weights);
   const delta = data.today.delta30d;
   const isPositive = delta >= 0;
 
   useEffect(() => {
-    // Animate the counter on load
-    const duration = 2000; // 2 seconds
-    const steps = 60;
+    const duration = 1500;
+    const steps = 50;
     const increment = compositeScore / steps;
     let current = 0;
     
@@ -28,7 +29,6 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
       if (current >= compositeScore) {
         current = compositeScore;
         clearInterval(timer);
-        setIsLoaded(true);
       }
       setAnimatedScore(Math.round(current * 10) / 10);
     }, duration / steps);
@@ -36,75 +36,113 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
     return () => clearInterval(timer);
   }, [compositeScore]);
 
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => setIsRefreshing(false), 1000);
+  };
+
   return (
-    <div className="text-center space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-4xl md:text-5xl font-semibold text-foreground font-primary">
-          Fractional Working Index
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Real-time intelligence on the fractional economy
-        </p>
+    <motion.div variants={fadeInUp} className="space-y-4">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
+            Fractional Working Index
+          </h1>
+          <p className="text-sm text-muted-foreground mt-1">
+            Real-time market intelligence
+          </p>
+        </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleRefresh}
+          className={`text-muted-foreground ${isRefreshing ? 'animate-spin' : ''}`}
+        >
+          <RefreshCw size={18} />
+        </Button>
       </div>
 
-      <div className="glass-card p-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      {/* Main Score Card */}
+      <div className="glass-card p-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
           {/* Main Score */}
-          <div className="md:col-span-1 space-y-2">
+          <div className="col-span-2 md:col-span-1">
             <div className="score-large count-up text-primary">
               {animatedScore.toFixed(1)}
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-xs text-muted-foreground mt-1">
               Current Index Score
             </div>
           </div>
 
           {/* Delta */}
-          <div className="md:col-span-1 space-y-2">
-            <div className={`flex items-center justify-center gap-2 text-2xl font-semibold ${
+          <div>
+            <div className={`flex items-center gap-1.5 text-xl font-semibold ${
               isPositive ? 'stat-up' : 'stat-down'
             }`}>
-              {isPositive ? <TrendingUp size={24} /> : <TrendingDown size={24} />}
+              {isPositive ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
               {isPositive ? '+' : ''}{delta.toFixed(1)}
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-xs text-muted-foreground mt-1">
               30-day change
             </div>
           </div>
 
-          {/* Meta Info */}
-          <div className="md:col-span-1 space-y-4">
-            <div className="text-sm text-muted-foreground">
-              Last updated: {new Date(data.asOf).toLocaleDateString('en-US', {
-                year: 'numeric',
+          {/* Last Updated */}
+          <div className="hidden md:block">
+            <div className="text-sm font-medium text-foreground">
+              {new Date(data.asOf).toLocaleDateString('en-US', {
                 month: 'short', 
-                day: 'numeric'
+                day: 'numeric',
+                year: 'numeric'
               })}
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button className="btn-primary" onClick={() => window.open('/assets/fwi_sample_report.pdf', '_blank')}>
-                <Download size={16} />
-                Get Full Report
-              </Button>
-              <Button variant="outline" className="btn-secondary" onClick={onShowMethodology}>
-                <BookOpen size={16} />
-                Methodology
-              </Button>
+            <div className="text-xs text-muted-foreground mt-1">
+              Last updated
             </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2 justify-end">
+            <Button 
+              size="sm" 
+              variant="outline"
+              onClick={onShowMethodology}
+              className="hidden sm:flex"
+            >
+              <BookOpen size={14} className="mr-1.5" />
+              Methodology
+            </Button>
+            <Button 
+              size="sm"
+              onClick={() => window.open('/assets/fwi_sample_report.pdf', '_blank')}
+            >
+              <Download size={14} className="mr-1.5" />
+              Report
+            </Button>
           </div>
         </div>
 
         {/* Weight indicators */}
-        <div className="mt-6 pt-6 border-t border-border">
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
-            <span>Demand (40%)</span>
-            <span>Supply (40%)</span>
-            <span>Culture (20%)</span>
+        <div className="mt-5 pt-4 border-t border-border">
+          <div className="flex flex-wrap gap-4 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-primary" />
+              Demand ({Math.round(data.weights.demand * 100)}%)
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-accent" />
+              Supply ({Math.round(data.weights.supply * 100)}%)
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-secondary" />
+              Culture ({Math.round(data.weights.culture * 100)}%)
+            </span>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
