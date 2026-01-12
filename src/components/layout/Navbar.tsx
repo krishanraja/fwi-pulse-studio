@@ -17,14 +17,14 @@ const Navbar = () => {
   return (
     <>
       <nav className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container-width">
+        <div className="container-width !px-4 sm:!px-6 lg:!px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo / Wordmark */}
-            <div className="flex items-center">
+            {/* Logo / Wordmark - aligned with content below */}
+            <div className="flex items-center -ml-0">
               <img 
                 src={fractionlLogo} 
                 alt="Fractionl" 
-                className="h-10 object-contain"
+                className="h-7 object-contain"
               />
             </div>
 
