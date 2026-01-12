@@ -17,67 +17,58 @@ interface MethodologyDrawerProps {
 const MethodologyContent = ({ weights }: { weights: MethodologyDrawerProps['weights'] }) => {
   return (
     <div className="space-y-6 py-4">
-      {/* Formula */}
+      {/* Overview */}
       <div className="bg-muted/30 p-4 rounded-lg">
-        <h4 className="font-medium mb-2 text-foreground">Composite Formula</h4>
-        <div className="font-mono text-sm text-muted-foreground">
-          FWI = {(weights.demand * 100).toFixed(0)}% × Demand + {(weights.supply * 100).toFixed(0)}% × Supply + {(weights.culture * 100).toFixed(0)}% × Culture
-        </div>
-      </div>
-
-      {/* Components */}
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-primary" />
-            <h4 className="font-medium text-foreground">Demand ({(weights.demand * 100).toFixed(0)}%)</h4>
-          </div>
-          <p className="text-sm text-muted-foreground pl-5">
-            Weekly new postings tagged fractional/contract/interim across job boards and company career pages.
-          </p>
-          <div className="text-xs text-muted-foreground pl-5 space-y-0.5">
-            <p>• Indeed, RemoteOK, AngelList</p>
-            <p>• LinkedIn Talent Insights</p>
-            <p>• Company career pages</p>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-accent" />
-            <h4 className="font-medium text-foreground">Supply ({(weights.supply * 100).toFixed(0)}%)</h4>
-          </div>
-          <p className="text-sm text-muted-foreground pl-5">
-            Active gigs & rates on marketplaces plus developer activity as a talent proxy.
-          </p>
-          <div className="text-xs text-muted-foreground pl-5 space-y-0.5">
-            <p>• Upwork, Fiverr listings</p>
-            <p>• GitHub repo activity</p>
-            <p>• LinkedIn profiles</p>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-secondary" />
-            <h4 className="font-medium text-foreground">Culture ({(weights.culture * 100).toFixed(0)}%)</h4>
-          </div>
-          <p className="text-sm text-muted-foreground pl-5">
-            Search momentum, event counts, and media mentions indicating adoption.
-          </p>
-          <div className="text-xs text-muted-foreground pl-5 space-y-0.5">
-            <p>• Google Trends data</p>
-            <p>• Meetup/Eventbrite events</p>
-            <p>• Press mentions</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Normalization */}
-      <div className="border-t border-border pt-4">
-        <h4 className="font-medium mb-2 text-foreground">Normalization</h4>
+        <h4 className="font-medium mb-2 text-foreground">About the Index</h4>
         <p className="text-sm text-muted-foreground">
-          Each signal is scaled 0–100 monthly, then weighted. The index is anchored annually to official labor statistics (BLS/OECD).
+          The Fractional Working Index (FWI) is a proprietary composite score measuring the health and momentum of the fractional executive market in real-time.
+        </p>
+      </div>
+
+      {/* Components - High level only */}
+      <div className="space-y-4">
+        <h4 className="font-medium text-foreground text-sm uppercase tracking-wide">Index Components</h4>
+        
+        <div className="space-y-3">
+          <div className="flex items-center justify-between p-3 bg-muted/20 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+              <span className="font-medium text-foreground">Demand Signal</span>
+            </div>
+            <span className="text-sm text-muted-foreground">{(weights.demand * 100).toFixed(0)}% weight</span>
+          </div>
+          
+          <div className="flex items-center justify-between p-3 bg-muted/20 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-accent" />
+              <span className="font-medium text-foreground">Supply Signal</span>
+            </div>
+            <span className="text-sm text-muted-foreground">{(weights.supply * 100).toFixed(0)}% weight</span>
+          </div>
+          
+          <div className="flex items-center justify-between p-3 bg-muted/20 rounded-lg">
+            <div className="flex items-center gap-3">
+              <div className="w-2.5 h-2.5 rounded-full bg-secondary" />
+              <span className="font-medium text-foreground">Culture Signal</span>
+            </div>
+            <span className="text-sm text-muted-foreground">{(weights.culture * 100).toFixed(0)}% weight</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Data Quality */}
+      <div className="border-t border-border pt-4">
+        <h4 className="font-medium mb-2 text-foreground">Data Quality</h4>
+        <p className="text-sm text-muted-foreground">
+          The index aggregates data from multiple proprietary and public sources, normalized monthly and benchmarked against official labor statistics.
+        </p>
+      </div>
+      
+      {/* Pro teaser */}
+      <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg border border-primary/20">
+        <h4 className="font-medium mb-1 text-foreground">Want the full methodology?</h4>
+        <p className="text-sm text-muted-foreground">
+          Detailed data sources, weighting algorithms, and signal processing documentation available for enterprise subscribers.
         </p>
       </div>
 
