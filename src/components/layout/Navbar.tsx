@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger 
 } from '@/components/ui/dropdown-menu';
 import SettingsSheet from '@/components/SettingsSheet';
-import fractionlIcon from '@/assets/fractionl-icon.png';
+import fractionlLogo from '@/assets/fractionl-logo.png';
 
 const Navbar = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -20,15 +20,12 @@ const Navbar = () => {
         <div className="container-width">
           <div className="flex items-center justify-between h-16">
             {/* Logo / Wordmark */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center">
               <img 
-                src={fractionlIcon} 
+                src={fractionlLogo} 
                 alt="Fractionl" 
-                className="w-8 h-8 object-contain"
+                className="h-10 object-contain"
               />
-              <div className="hidden sm:block">
-                <span className="font-semibold text-foreground">Fractional Working Index</span>
-              </div>
             </div>
 
             {/* Actions */}
