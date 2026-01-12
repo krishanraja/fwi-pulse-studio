@@ -46,10 +46,11 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl md:text-3xl font-semibold text-foreground">
-            Fractional Working Index
+          <h1 className="hero-title">
+            <span className="hero-title-gradient">Fractional</span>
+            <span className="hero-title-accent"> Working Index</span>
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-muted-foreground mt-2 tracking-wide uppercase">
             Real-time market intelligence
           </p>
         </div>
@@ -57,7 +58,7 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
           variant="ghost"
           size="icon"
           onClick={handleRefresh}
-          className={`text-muted-foreground ${isRefreshing ? 'animate-spin' : ''}`}
+          className={`text-muted-foreground hover:text-primary transition-colors ${isRefreshing ? 'animate-spin' : ''}`}
         >
           <RefreshCw size={18} />
         </Button>
