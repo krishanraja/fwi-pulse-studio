@@ -24,7 +24,7 @@ const Navbar = () => {
               <img 
                 src={fractionlLogo} 
                 alt="Fractionl" 
-                className="h-16 object-contain"
+                className="h-8 object-contain"
               />
             </div>
 
