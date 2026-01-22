@@ -48,7 +48,7 @@ const HeroSection = ({ data, onShowMethodology }: HeroSectionProps) => {
         <div>
           <h1 className="hero-title">
             <span className="hero-title-gradient">Fractional</span>
-            <span className="hero-title-accent"> Working Index</span>
+            <span className="hero-title-accent"> Metrics</span>
           </h1>
           <p className="text-sm text-muted-foreground mt-2 tracking-wide uppercase">
             Real-time market intelligence
