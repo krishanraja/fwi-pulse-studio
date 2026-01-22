@@ -19,9 +19,9 @@ const MethodologyContent = ({ weights }: { weights: MethodologyDrawerProps['weig
     <div className="space-y-6 py-4">
       {/* Overview */}
       <div className="bg-muted/30 p-4 rounded-lg">
-        <h4 className="font-medium mb-2 text-foreground">About the Index</h4>
+        <h4 className="font-medium mb-2 text-foreground">About the Metrics</h4>
         <p className="text-sm text-muted-foreground">
-          The Fractional Working Index (FWI) is a proprietary composite score measuring the health and momentum of the fractional executive market in real-time.
+          Fractional Metrics (FWI) is a proprietary composite score measuring the health and momentum of the fractional executive market in real-time.
         </p>
       </div>
 
