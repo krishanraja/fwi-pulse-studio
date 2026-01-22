@@ -25,6 +25,9 @@ const Navbar = () => {
                 src={fractionlLogo} 
                 alt="Fractionl" 
                 className="h-6 md:h-8 object-contain"
+                loading="eager"
+                decoding="sync"
+                fetchPriority="high"
               />
             </div>
 
