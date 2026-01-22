@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
 import fractionlIcon from '@/assets/fractionl-icon.png';
 
+// Preload the icon immediately
+const preloadImage = new Image();
+preloadImage.src = fractionlIcon;
+
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   showLogo?: boolean;
@@ -43,12 +47,15 @@ const LoadingSpinner = ({ size = 'md', showLogo = true }: LoadingSpinnerProps) =
         />
       </motion.svg>
 
-      {/* Logo in center */}
+      {/* Logo in center - eager loading for instant display */}
       {showLogo && (
         <motion.img
           src={fractionlIcon}
           alt="Fractionl"
           className={`${logo} object-contain`}
+          loading="eager"
+          decoding="sync"
+          fetchPriority="high"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
